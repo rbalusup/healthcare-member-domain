@@ -1,0 +1,38 @@
+# Binaries
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts
+*.test
+coverage.out
+
+# Go workspace
+go.work
+go.work.sum
+
+# Environment files (may contain secrets)
+.env
+.env.*
+!.env.example
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local only)
+data/
+
+# Generated code is committed as stubs for Phase 1.
+# After running `make generate`, the real protoc output replaces these stubs.
+# If you prefer not to commit generated code, uncomment the lines below:
+# gen/

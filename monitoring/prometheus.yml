@@ -1,0 +1,24 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  scrape_timeout:      10s
+
+  external_labels:
+    service: member-service
+    environment: local
+
+rule_files:
+  # - "alert_rules.yml"
+
+scrape_configs:
+  # Member service metrics
+  - job_name: 'member-service'
+    static_configs:
+      - targets: ['member-service:2112']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

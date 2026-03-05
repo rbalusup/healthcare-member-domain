@@ -1,0 +1,49 @@
+{
+  "family": "member-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::ACCOUNT_ID:role/memberServiceTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "member-service",
+      "image": "ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/member-service:latest",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 9090, "protocol": "tcp", "name": "grpc" },
+        { "containerPort": 8080, "protocol": "tcp", "name": "http" },
+        { "containerPort": 2112, "protocol": "tcp", "name": "metrics" }
+      ],
+      "environment": [
+        { "name": "MEMBER_LOG_LEVEL", "value": "info" },
+        { "name": "MEMBER_LOG_FORMAT", "value": "json" }
+      ],
+      "secrets": [
+        { "name": "MEMBER_DB_HOST",     "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/db/host" },
+        { "name": "MEMBER_DB_PORT",     "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/db/port" },
+        { "name": "MEMBER_DB_NAME",     "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/db/name" },
+        { "name": "MEMBER_DB_USER",     "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/db/user" },
+        { "name": "MEMBER_DB_PASSWORD", "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/db/password" },
+        { "name": "MEMBER_KAFKA_BROKERS", "valueFrom": "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/member-service/kafka/brokers" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/member-service",
+          "awslogs-region": "REGION",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "wget -q --spider http://localhost:8080/health || exit 1"],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      },
+      "stopTimeout": 30
+    }
+  ]
+}

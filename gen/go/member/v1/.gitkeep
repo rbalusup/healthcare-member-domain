@@ -1,0 +1,3 @@
+# This directory is populated by running: make generate
+# It contains Go code generated from api/member/v1/member.proto via protoc.
+# Do not manually edit files in this directory.
