@@ -13,6 +13,51 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// NewMemberServiceClient creates a new MemberServiceClient from a connection.
+func NewMemberServiceClient(cc grpc.ClientConnInterface) MemberServiceClient {
+	return &memberServiceClient{cc}
+}
+
+type memberServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func (c *memberServiceClient) CreateMember(ctx context.Context, in *CreateMemberRequest, opts ...grpc.CallOption) (*Member, error) {
+	out := new(Member)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/CreateMember", in, out, opts...)
+	return out, err
+}
+
+func (c *memberServiceClient) GetMember(ctx context.Context, in *GetMemberRequest, opts ...grpc.CallOption) (*Member, error) {
+	out := new(Member)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/GetMember", in, out, opts...)
+	return out, err
+}
+
+func (c *memberServiceClient) UpdateMember(ctx context.Context, in *UpdateMemberRequest, opts ...grpc.CallOption) (*Member, error) {
+	out := new(Member)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/UpdateMember", in, out, opts...)
+	return out, err
+}
+
+func (c *memberServiceClient) ListMembers(ctx context.Context, in *ListMembersRequest, opts ...grpc.CallOption) (*ListMembersResponse, error) {
+	out := new(ListMembersResponse)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/ListMembers", in, out, opts...)
+	return out, err
+}
+
+func (c *memberServiceClient) EnrollMember(ctx context.Context, in *EnrollMemberRequest, opts ...grpc.CallOption) (*Member, error) {
+	out := new(Member)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/EnrollMember", in, out, opts...)
+	return out, err
+}
+
+func (c *memberServiceClient) GetMemberRiskProfile(ctx context.Context, in *GetMemberRiskProfileRequest, opts ...grpc.CallOption) (*RiskProfile, error) {
+	out := new(RiskProfile)
+	err := c.cc.Invoke(ctx, "/healthcare.member.v1.MemberService/GetMemberRiskProfile", in, out, opts...)
+	return out, err
+}
+
 // MemberServiceClient is the client API for MemberService service.
 type MemberServiceClient interface {
 	CreateMember(ctx context.Context, in *CreateMemberRequest, opts ...grpc.CallOption) (*Member, error)

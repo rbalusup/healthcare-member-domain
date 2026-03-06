@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -321,18 +322,5 @@ func fromRow(row memberRow) (*member.Member, error) {
 
 // isUniqueViolation detects PostgreSQL unique constraint violations (code 23505).
 func isUniqueViolation(err error) bool {
-	return err != nil && fmt.Sprintf("%s", err) != "" &&
-		containsStr(err.Error(), "23505")
-}
-
-func containsStr(s, sub string) bool {
-	return len(s) >= len(sub) && (s == sub || len(sub) == 0 ||
-		func() bool {
-			for i := 0; i <= len(s)-len(sub); i++ {
-				if s[i:i+len(sub)] == sub {
-					return true
-				}
-			}
-			return false
-		}())
+	return err != nil && strings.Contains(err.Error(), "23505")
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/healthcare/member-service/internal/application/member/commands"
 	"github.com/healthcare/member-service/internal/application/member/queries"
 	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/healthcare/member-service/internal/infrastructure/metrics"
 )
 
 // EventPublisher publishes domain events to the message bus (Kafka).
@@ -25,6 +26,7 @@ type Service struct {
 	repo      member.Repository
 	publisher EventPublisher
 	logger    *zap.Logger
+	metrics   *metrics.Metrics
 }
 
 // NewService constructs an application Service with its dependencies.
@@ -32,11 +34,13 @@ func NewService(
 	repo member.Repository,
 	publisher EventPublisher,
 	logger *zap.Logger,
+	m *metrics.Metrics,
 ) *Service {
 	return &Service{
 		repo:      repo,
 		publisher: publisher,
 		logger:    logger,
+		metrics:   m,
 	}
 }
 
@@ -73,8 +77,11 @@ func (s *Service) CreateMember(ctx context.Context, cmd commands.CreateMemberCom
 	}
 
 	if err := s.repo.Create(ctx, m); err != nil {
+		s.metrics.MembersCreatedErrorsTotal.Inc()
 		return nil, fmt.Errorf("persisting member: %w", err)
 	}
+
+	s.metrics.MembersCreatedTotal.Inc()
 
 	if err := s.publisher.PublishMemberCreated(ctx, m); err != nil {
 		// Log but don't fail — event delivery is best-effort at this layer.
@@ -140,8 +147,11 @@ func (s *Service) UpdateMember(ctx context.Context, cmd commands.UpdateMemberCom
 	}
 
 	if err := s.repo.Update(ctx, m); err != nil {
+		s.metrics.MembersUpdatedErrorsTotal.Inc()
 		return nil, fmt.Errorf("updating member: %w", err)
 	}
+
+	s.metrics.MembersUpdatedTotal.Inc()
 
 	if err := s.publisher.PublishMemberUpdated(ctx, m); err != nil {
 		s.logger.Warn("failed to publish member.updated event",
@@ -167,6 +177,8 @@ func (s *Service) EnrollMember(ctx context.Context, cmd commands.EnrollMemberCom
 	if err := s.repo.Update(ctx, m); err != nil {
 		return nil, fmt.Errorf("persisting enrollment: %w", err)
 	}
+
+	s.metrics.MembersEnrolledTotal.Inc()
 
 	if err := s.publisher.PublishMemberEnrolled(ctx, m); err != nil {
 		s.logger.Warn("failed to publish member.enrolled event",

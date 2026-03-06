@@ -12,14 +12,6 @@ import (
 	"github.com/healthcare/member-service/internal/domain/member"
 )
 
-// MemberEvent is the envelope published to Kafka for all member domain events.
-type MemberEvent struct {
-	EventType string      `json:"event_type"`
-	MemberID  string      `json:"member_id"`
-	Timestamp time.Time   `json:"timestamp"`
-	Payload   interface{} `json:"payload"`
-}
-
 // Producer publishes member domain events to Kafka using exactly-once semantics.
 type Producer struct {
 	producer *kafka.Producer
