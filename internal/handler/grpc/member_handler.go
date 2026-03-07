@@ -42,7 +42,7 @@ func (h *MemberHandler) CreateMember(ctx context.Context, req *memberv1.CreateMe
 		Email:          req.Email,
 		Phone:          req.Phone,
 		DateOfBirth:    dob,
-		Gender:         member.Gender(req.Gender.String()),
+		Gender:         protoGenderToDomain(req.Gender),
 		Street:         req.Address.GetStreet(),
 		City:           req.Address.GetCity(),
 		State:          req.Address.GetState(),
@@ -198,16 +198,60 @@ func toGRPCError(err error) error {
 // toProtoMember converts an application read model to a proto Member message.
 func toProtoMember(r *queries.MemberResult) *memberv1.Member {
 	return &memberv1.Member{
-		MemberId:       r.MemberID,
-		FirstName:      r.FirstName,
-		LastName:       r.LastName,
-		Email:          r.Email,
-		Phone:          r.Phone,
-		Gender:         memberv1.Gender(memberv1.Gender_value[r.Gender]),
-		Status:         memberv1.MemberStatus(memberv1.MemberStatus_value[r.Status]),
-		PlanId:         r.PlanID,
-		RiskScore:      r.RiskScore,
-		CareLevel:      r.CareLevel,
+		MemberId:  r.MemberID,
+		FirstName: r.FirstName,
+		LastName:  r.LastName,
+		Email:     r.Email,
+		Phone:     r.Phone,
+		Gender:    domainGenderToProto(r.Gender),
+		Status:    domainStatusToProto(r.Status),
+		PlanId:    r.PlanID,
+		RiskScore: r.RiskScore,
+		CareLevel: r.CareLevel,
+	}
+}
+
+// domainGenderToProto maps a domain gender string to the proto enum constant.
+// Real protoc output uses full prefixed names (GENDER_MALE) not short aliases (MALE).
+func domainGenderToProto(g string) memberv1.Gender {
+	switch g {
+	case "MALE":
+		return memberv1.Gender_GENDER_MALE
+	case "FEMALE":
+		return memberv1.Gender_GENDER_FEMALE
+	case "NON_BINARY":
+		return memberv1.Gender_GENDER_NON_BINARY
+	default:
+		return memberv1.Gender_GENDER_UNSPECIFIED
+	}
+}
+
+// domainStatusToProto maps a domain status string to the proto enum constant.
+func domainStatusToProto(s string) memberv1.MemberStatus {
+	switch s {
+	case "ACTIVE":
+		return memberv1.MemberStatus_MEMBER_STATUS_ACTIVE
+	case "INACTIVE":
+		return memberv1.MemberStatus_MEMBER_STATUS_INACTIVE
+	case "SUSPENDED":
+		return memberv1.MemberStatus_MEMBER_STATUS_SUSPENDED
+	default:
+		return memberv1.MemberStatus_MEMBER_STATUS_UNSPECIFIED
+	}
+}
+
+// protoGenderToDomain maps a proto Gender enum to the domain string constant.
+// Real protoc output's Gender.String() returns "GENDER_MALE", not "MALE".
+func protoGenderToDomain(g memberv1.Gender) member.Gender {
+	switch g {
+	case memberv1.Gender_GENDER_MALE:
+		return member.GenderMale
+	case memberv1.Gender_GENDER_FEMALE:
+		return member.GenderFemale
+	case memberv1.Gender_GENDER_NON_BINARY:
+		return member.GenderNonBinary
+	default:
+		return member.GenderUnspecified
 	}
 }
 
