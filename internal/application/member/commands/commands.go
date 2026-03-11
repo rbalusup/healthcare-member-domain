@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // CreateMemberCommand carries input for creating a new member.

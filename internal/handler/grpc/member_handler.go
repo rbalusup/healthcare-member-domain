@@ -10,11 +10,11 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	memberv1 "github.com/healthcare/member-service/gen/go/member/v1"
-	appMember "github.com/healthcare/member-service/internal/application/member"
-	"github.com/healthcare/member-service/internal/application/member/commands"
-	"github.com/healthcare/member-service/internal/application/member/queries"
-	"github.com/healthcare/member-service/internal/domain/member"
+	memberv1 "github.com/rbalusup/healthcare-member-domain/gen/go/member/v1"
+	appMember "github.com/rbalusup/healthcare-member-domain/internal/application/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/application/member/commands"
+	"github.com/rbalusup/healthcare-member-domain/internal/application/member/queries"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // MemberHandler implements the gRPC MemberServiceServer interface.
@@ -185,9 +185,9 @@ func toGRPCError(err error) error {
 	case errors.Is(err, member.ErrMemberAlreadyExists):
 		return status.Errorf(codes.AlreadyExists, "member already exists")
 	case errors.Is(err, member.ErrInvalidMemberData):
-		return status.Errorf(codes.InvalidArgument, err.Error())
+		return status.Errorf(codes.InvalidArgument, "%s", err.Error())
 	case errors.Is(err, member.ErrMemberEnrollmentFailed):
-		return status.Errorf(codes.FailedPrecondition, err.Error())
+		return status.Errorf(codes.FailedPrecondition, "%s", err.Error())
 	case errors.Is(err, member.ErrMemberNotActive):
 		return status.Errorf(codes.FailedPrecondition, "member is not active")
 	default:

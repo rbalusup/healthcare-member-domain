@@ -1,6 +1,6 @@
-module github.com/healthcare/member-service
+module github.com/rbalusup/healthcare-member-domain
 
-go 1.22
+go 1.25.6
 
 require (
 	github.com/confluentinc/confluent-kafka-go/v2 v2.4.0

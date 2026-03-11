@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 func validMemberArgs() (string, string, string, string, time.Time, member.Gender, member.Address, string, time.Time) {

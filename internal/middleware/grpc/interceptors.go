@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/healthcare/member-service/internal/infrastructure/metrics"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/metrics"
 )
 
 type contextKey string

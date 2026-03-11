@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 func TestSentinelErrors_AreDistinct(t *testing.T) {

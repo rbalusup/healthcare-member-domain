@@ -9,7 +9,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"go.uber.org/zap"
 
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // Producer publishes member domain events to Kafka using exactly-once semantics.

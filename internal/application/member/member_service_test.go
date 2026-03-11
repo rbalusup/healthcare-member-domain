@@ -11,12 +11,12 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 
-	appMember "github.com/healthcare/member-service/internal/application/member"
-	"github.com/healthcare/member-service/internal/application/member/commands"
-	"github.com/healthcare/member-service/internal/application/member/queries"
-	"github.com/healthcare/member-service/internal/domain/member"
-	"github.com/healthcare/member-service/internal/infrastructure/metrics"
-	"github.com/healthcare/member-service/internal/testutil"
+	appMember "github.com/rbalusup/healthcare-member-domain/internal/application/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/application/member/commands"
+	"github.com/rbalusup/healthcare-member-domain/internal/application/member/queries"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/metrics"
+	"github.com/rbalusup/healthcare-member-domain/internal/testutil"
 )
 
 func newTestService(repo *testutil.MockRepository, pub *testutil.MockEventPublisher) *appMember.Service {

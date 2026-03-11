@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package healthcare.member.v1;
 
-option go_package = "github.com/healthcare/member-service/gen/go/member/v1;memberv1";
+option go_package = "github.com/rbalusup/healthcare-member-domain/gen/go/member/v1;memberv1";
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";

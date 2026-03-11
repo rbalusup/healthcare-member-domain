@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
 
-	appMember "github.com/healthcare/member-service/internal/application/member"
-	"github.com/healthcare/member-service/internal/domain/member"
+	appMember "github.com/rbalusup/healthcare-member-domain/internal/application/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // MockRepository is a testify mock implementation of member.Repository.

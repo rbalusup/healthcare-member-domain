@@ -13,12 +13,12 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	memberv1 "github.com/healthcare/member-service/gen/go/member/v1"
-	appMember "github.com/healthcare/member-service/internal/application/member"
-	"github.com/healthcare/member-service/internal/domain/member"
-	grpcHandler "github.com/healthcare/member-service/internal/handler/grpc"
-	"github.com/healthcare/member-service/internal/infrastructure/metrics"
-	"github.com/healthcare/member-service/internal/testutil"
+	memberv1 "github.com/rbalusup/healthcare-member-domain/gen/go/member/v1"
+	appMember "github.com/rbalusup/healthcare-member-domain/internal/application/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
+	grpcHandler "github.com/rbalusup/healthcare-member-domain/internal/handler/grpc"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/metrics"
+	"github.com/rbalusup/healthcare-member-domain/internal/testutil"
 )
 
 func newHandlerWithMocks(repo *testutil.MockRepository, pub *testutil.MockEventPublisher) *grpcHandler.MemberHandler {

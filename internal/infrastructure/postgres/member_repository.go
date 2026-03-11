@@ -12,7 +12,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // memberRow is the flat database row representation of a Member.

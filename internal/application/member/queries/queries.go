@@ -2,7 +2,7 @@ package queries
 
 import (
 	"github.com/google/uuid"
-	"github.com/healthcare/member-service/internal/domain/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/domain/member"
 )
 
 // GetMemberQuery retrieves a single member by ID.

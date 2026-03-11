@@ -19,15 +19,15 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 
-	memberv1 "github.com/healthcare/member-service/gen/go/member/v1"
-	appMember "github.com/healthcare/member-service/internal/application/member"
-	"github.com/healthcare/member-service/internal/config"
-	grpcHandler "github.com/healthcare/member-service/internal/handler/grpc"
-	httpHandler "github.com/healthcare/member-service/internal/handler/http"
-	"github.com/healthcare/member-service/internal/infrastructure/kafka"
-	"github.com/healthcare/member-service/internal/infrastructure/metrics"
-	middleware "github.com/healthcare/member-service/internal/middleware/grpc"
-	"github.com/healthcare/member-service/internal/infrastructure/postgres"
+	memberv1 "github.com/rbalusup/healthcare-member-domain/gen/go/member/v1"
+	appMember "github.com/rbalusup/healthcare-member-domain/internal/application/member"
+	"github.com/rbalusup/healthcare-member-domain/internal/config"
+	grpcHandler "github.com/rbalusup/healthcare-member-domain/internal/handler/grpc"
+	httpHandler "github.com/rbalusup/healthcare-member-domain/internal/handler/http"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/kafka"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/metrics"
+	middleware "github.com/rbalusup/healthcare-member-domain/internal/middleware/grpc"
+	"github.com/rbalusup/healthcare-member-domain/internal/infrastructure/postgres"
 )
 
 func main() {
